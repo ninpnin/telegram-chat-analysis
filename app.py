@@ -14,7 +14,7 @@ def read_date(msg):
     return date
 
 def to_df(args):
-    jstr = open("data/" + args.dataset + ".json", "r").read()
+    jstr = open(args.datafolder + args.dataset + ".json", "r").read()
     data = json.loads(jstr)
 
     rows = []
@@ -70,6 +70,7 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument("--datafolder", type=str, default="data/")
     parser.add_argument("--dataset", type=str, default="results")
     parser.add_argument("--stopwords", type=str, default=None)
     parser.add_argument("--lowercase", type=bool, default=False)
