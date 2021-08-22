@@ -64,9 +64,13 @@ def main(args):
     df = to_df(args)
     print(df)
 
-    grams = n_grams(df, n=3)
-    for ngram, count in grams:
-        print(ngram, count)
+    if args.analysis == "ngrams":
+        grams = n_grams(df, n=3)
+        for ngram, count in grams:
+            print(ngram, count)
+    elif args.analysis == "histogram":
+        raise NotImplementedError("Histogram analysis not implemented.")
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -74,6 +78,8 @@ if __name__ == '__main__':
     parser.add_argument("--dataset", type=str, default="results")
     parser.add_argument("--stopwords", type=str, default=None)
     parser.add_argument("--lowercase", type=bool, default=False)
+    parser.add_argument("--analysis", type=str, default="ngrams",
+        choices=['ngrams', 'histogram'],)
     args = parser.parse_args()
 
     main(args)
