@@ -9,7 +9,7 @@ def read_date(msg):
     try:
        date = dt.strptime(msg["date"], dateformat)
     except TypeError:
-        print("Pajari!")
+        print("Date parsing unsuccessful")
 
     return date
 
