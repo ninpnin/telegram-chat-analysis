@@ -60,6 +60,13 @@ def n_grams(df, n=2, threshold=5):
     grams = sorted(grams, key= lambda t: t[1])
     return grams
 
+def preprocess(df, shuffle=True, outfile="data/out.csv"):
+    if shuffle:
+        df = df.sample(frac=1)
+
+    df = df[["sender", "text"]]
+    df.to_csv(outfile, index=False)
+
 def main(args):
     df = to_df(args)
     print(df)
@@ -70,7 +77,8 @@ def main(args):
             print(ngram, count)
     elif args.analysis == "histogram":
         raise NotImplementedError("Histogram analysis not implemented.")
-
+    elif args.analysis == "preprocess":
+        preprocess(df)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -79,7 +87,7 @@ if __name__ == '__main__':
     parser.add_argument("--stopwords", type=str, default=None)
     parser.add_argument("--lowercase", type=bool, default=False)
     parser.add_argument("--analysis", type=str, default="ngrams",
-        choices=['ngrams', 'histogram'],)
+        choices=['ngrams', 'histogram', 'preprocess'],)
     args = parser.parse_args()
 
     main(args)
